@@ -24,7 +24,7 @@ int rand_between(int min, int max) {
 int main(int argc, char*argv[]) {
     srand(time(NULL));
 
-    char *test_string = "Now is the time for all good people to come to the aid of their country test test test test test test test test test test test";
+    char *test_string = "Now is the time for all good people to come to the aid of their country and the string wasn't long enough for the tests so here's some more stuff to make it longer";
 
     if(argc > 1) {
         test_string = argv[1];
@@ -83,7 +83,7 @@ int main(int argc, char*argv[]) {
 
     printf("\nNow trying to reallocate the memory...\n");
 
-    char *new_buffer = xrealloc(buffer, (len_to_copy * 2) * sizeof(char));
+    char *new_buffer = xrealloc(buffer, (len_to_copy * 2 + 1) * sizeof(char));
     if(new_buffer == NULL) {
         perror("realloc failed");
         free(buffer);
