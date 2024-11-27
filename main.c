@@ -79,7 +79,7 @@ void small_test() {
 
     // Allocating memory
     for (int ix = 0; ix < TEST_SIZE; ix++) {
-        int size = rand_between(1, 72);
+        int size = rand_between(1, 10);
         fprintf(stderr, "[%d] size: %d\n", ix, size);
 
         ptrs[ix] = xmalloc(size);
@@ -119,7 +119,7 @@ void large_test() {
 
     // Allocating memory
     for (int ix = 0; ix < TEST_SIZE; ix++) {
-        int size = rand_between(1, 72);
+        int size = rand_between(10, 72);
         fprintf(stderr, "[%d] size: %d\n", ix, size);
 
         ptrs[ix] = xmalloc(size);
@@ -160,7 +160,7 @@ void same_size_test() {
 
     // Allocating memory
     for (int ix = 0; ix < TEST_SIZE; ix++) {
-        int size = 72;
+        int size = 50;
         fprintf(stderr, "[%d] size: %d\n", ix, size);
 
         ptrs[ix] = xmalloc(size);
