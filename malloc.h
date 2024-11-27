@@ -4,9 +4,8 @@
 #define MALLOC_H
 
 #define SMALL_MEMORY_POOL_SIZE 128 // 128 bytes
-#define MEDIUM_MEMORY_POOL_SIZE 512 // 512 bytes
 #define LARGE_MEMORY_POOL_SIZE 1024 // 1KB
-#define MAX_BLOCKS 1000
+// #define MAX_BLOCKS 1000
 
 typedef struct chunk_on_heap {
     int size;

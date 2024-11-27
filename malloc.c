@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include "tests.h"
 
+#include "malloc.h"
 
 static char *memory_pool = NULL;
 static size_t memory_pool_size = 0;
@@ -15,8 +15,8 @@ static int heap_size = 0; // Number of chunks on the heap
 
 void initialize_memory_pool() {
     if (memory_pool == NULL) {
-        memory_pool = get_me_blocks(SMALL_MEMORY_POOL_SIZE);
-        memory_pool_size = SMALL_MEMORY_POOL_SIZE;
+        memory_pool = get_me_blocks(LARGE_MEMORY_POOL_SIZE);
+        memory_pool_size = LARGE_MEMORY_POOL_SIZE;
         heap = (chunk_on_heap*)memory_pool;
         heap[0].size = memory_pool_size - sizeof(chunk_on_heap);
         heap[0].pointer_to_start = memory_pool + sizeof(chunk_on_heap);
@@ -75,6 +75,18 @@ chunk_on_heap extract_min() {
 }
 
 void heap_insert(chunk_on_heap chunk) {
+    // heap[heap_size++] = chunk;
+    // heapify_up(heap_size - 1);
+    if (heap_size == memory_pool_size / sizeof(chunk_on_heap)) {
+        // Resize heap if it's full
+        memory_pool_size *= 2;
+        heap = realloc(heap, memory_pool_size);
+        if (heap == NULL) {
+            fprintf(stderr, "Memory allocation failed during heap resizing\n");
+            exit(1);
+        }
+    }
+
     heap[heap_size++] = chunk;
     heapify_up(heap_size - 1);
 }
@@ -125,7 +137,12 @@ void xfree(void *ptr) {
     }
 
     chunk_on_heap* chunk = (chunk_on_heap*)((char*)ptr - sizeof(chunk_on_heap));
+    if(chunk->pointer_to_start == NULL) {
+        return;
+    }
+
     chunk->pointer_to_start = (char*)ptr;
+    // chunk->pointer_to_start = NULL;
     heap_insert(*chunk);
 }
 
