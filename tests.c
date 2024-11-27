@@ -1,73 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-// define "x" for system malloc, include for our versions. Don't do both
-#ifdef SYSTEM_MALLOC
-#define xfree free
-#define xmalloc malloc
-#define xrealloc realloc
-#else
-#include "malloc.h"
-#endif
-
-static char *test_string = "Now is the time for all good people to come to the aid of their country.";
-
-
-int rand_between(int min, int max) {
-    return rand() % (max - min + 1) + min;
-}
+#include "malloc.c"
 
 void small_test();
 void large_test();
 void same_size_test();
 void interspersed_frees_test();
 
+static char *test_string = "Now is the time for all good people to come to the aid of their country.";
 #define TEST_SIZE 10
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-
-int main(int argc, char*argv[]) {
-    srand(time(NULL));
-
-    #ifndef SYSTEM_MALLOC
-    initialize_memory_pool();
-    #endif
-
-    // Check if the user provided the "-t" flag
-    if (argc == 3 && strcmp(argv[1], "-t") == 0) {
-        int test_case = atoi(argv[2]);
-
-        switch (test_case) {
-            case 1:
-                small_test();
-                break;
-            case 2:
-                large_test();
-                break;
-            case 3: 
-                same_size_test();
-                break;
-            case 4: 
-                interspersed_frees_test();
-                break;
-            default:
-                fprintf(stderr, "Invalid test case number\n");
-                return 1;
-        }
-    }
-    else {
-        small_test();
-        large_test();
-        same_size_test();
-        interspersed_frees_test();
-    }
-
-
-    return 0;
+int rand_between(int min, int max) {
+    return rand() % (max - min + 1) + min;
 }
 
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 void small_test() {
     #ifndef SYSTEM_MALLOC
