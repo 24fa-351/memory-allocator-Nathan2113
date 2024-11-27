@@ -15,8 +15,8 @@ static int heap_size = 0; // Number of chunks on the heap
 
 void initialize_memory_pool() {
     if (memory_pool == NULL) {
-        memory_pool = get_me_blocks(SMALL_MEMORY_POOL_SIZE);
-        memory_pool_size = SMALL_MEMORY_POOL_SIZE;
+        memory_pool = get_me_blocks(1024 * 1024);
+        memory_pool_size = 1024 * 1024;
         heap = (chunk_on_heap*)memory_pool;
         heap[0].size = memory_pool_size - sizeof(chunk_on_heap);
         heap[0].pointer_to_start = memory_pool + sizeof(chunk_on_heap);
