@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include "tests.h"
 
-#include "malloc.h"
 
 static char *memory_pool = NULL;
 static size_t memory_pool_size = 0;
